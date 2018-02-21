@@ -1,6 +1,4 @@
-# elogogo
-European Go Federation Elo System, in Go
-
+# European Go Federation Elo System, in Go
 Implementation of Go (board game) ELO Rating System based on EGF (European Go Federation), which is pegged to
 20 ranks of Kyu, and 7 ranks of Dan.
 
