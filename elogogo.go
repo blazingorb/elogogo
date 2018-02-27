@@ -40,7 +40,7 @@ func CalcKA(rating float64) (k float64, a float64) {
 	return
 }
 
-// CalcOffer ratingB is higher than ratingA
+// CalcOffer Win-Lose offer where ratingB is higher than ratingA
 func CalcOffer(ratingB, ratingA float64, scoreB, scoreA float64) (selectedK float64, offerB float64, offerA float64) {
 	// use lower Rating to get K/A
 	var A float64
