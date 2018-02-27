@@ -1,7 +1,6 @@
 package elogogo
 
 import (
-	"fmt"
 	"math"
 )
 
@@ -36,14 +35,14 @@ func CalcKA(rating float64) (k float64, a float64) {
 	}
 
 	ratio := ratingInt / 100
-  k = kRange[ratio]
-  a = float64(AMax - ((ratio - 1) * 5))
-	return 
+	k = kRange[ratio]
+	a = float64(AMax - ((ratio - 1) * 5))
+	return
 }
 
 // CalcOffer ratingB is higher than ratingA
 func CalcOffer(ratingB, ratingA float64, scoreB, scoreA float64) (selectedK float64, offerB float64, offerA float64) {
-  // use lower Rating to get K/A
+	// use lower Rating to get K/A
 	var A float64
 	selectedK, A = CalcKA(ratingA)
 
@@ -54,4 +53,3 @@ func CalcOffer(ratingB, ratingA float64, scoreB, scoreA float64) (selectedK floa
 	offerA = (selectedK * (scoreA - probabilityA))
 	return
 }
-
