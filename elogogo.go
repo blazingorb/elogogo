@@ -41,15 +41,19 @@ func CalcKA(rating float64) (k float64, a float64) {
 }
 
 // CalcOffer Win-Lose offer where ratingB is higher than ratingA
-func CalcOffer(ratingB, ratingA float64, scoreB, scoreA float64) (selectedK float64, offerB float64, offerA float64) {
-	// use lower Rating to get K/A
-	var A float64
-	selectedK, A = CalcKA(ratingA)
-
-	probabilityA := 1 / (math.Exp((ratingB-ratingA)/A) + 1)
+func CalcOffer(ratingB, ratingA, scoreB, scoreA float64) (offerB float64, offerA float64) {
+	K, _, probabilityA := CalcConfidence(ratingB, ratingA)
 	probabilityB := 1 - probabilityA
 
-	offerB = (selectedK * (scoreB - probabilityB))
-	offerA = (selectedK * (scoreA - probabilityA))
+	offerB = (K * (scoreB - probabilityB))
+	offerA = (K * (scoreA - probabilityA))
+	return
+}
+
+// CalcConfidence the percent chance of winning between player with ratingA against player with ratingB where ratingB is higher
+func CalcConfidence(ratingB, ratingA float64) (K float64, A float64, probabilityA float64) {
+	// use lower Rating to get K/A
+	K, A = CalcKA(ratingA)
+	probabilityA = 1 / (math.Exp((ratingB-ratingA)/A) + 1)
 	return
 }
