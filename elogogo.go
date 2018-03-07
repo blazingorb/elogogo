@@ -26,7 +26,7 @@ func init() {
 }
 
 // CalcKA get the K and A constants for a specified rating based on the EGF rating table
-func CalcKA(rating float64) (k float64, a float64) {
+func CalcKA(rating float64) (K float64, A float64) {
 	ratingInt := int(rating)
 	if ratingInt < RatingMin {
 		return kRange[1], AMax
@@ -35,14 +35,14 @@ func CalcKA(rating float64) (k float64, a float64) {
 	}
 
 	ratio := ratingInt / 100
-	k = kRange[ratio]
-	a = float64(AMax - ((ratio - 1) * 5))
+	K = kRange[ratio]
+	A = float64(AMax - ((ratio - 1) * 5))
 	return
 }
 
 // CalcOffer Win-Lose offer where ratingB is higher than ratingA
 func CalcOffer(ratingB, ratingA, scoreB, scoreA float64) (offerB float64, offerA float64) {
-	K, _, probabilityA := CalcConfidence(ratingB, ratingA)
+	probabilityA, K, _ := CalcConfidence(ratingB, ratingA)
 	probabilityB := 1 - probabilityA
 
 	offerB = (K * (scoreB - probabilityB))
@@ -50,8 +50,8 @@ func CalcOffer(ratingB, ratingA, scoreB, scoreA float64) (offerB float64, offerA
 	return
 }
 
-// CalcConfidence the percent chance of winning between player with ratingA against player with ratingB where ratingB is higher
-func CalcConfidence(ratingB, ratingA float64) (K float64, A float64, probabilityA float64) {
+// CalcConfidence the estimated winning percentage for weaker RatingA against higher ratingB
+func CalcConfidence(ratingB, ratingA float64) (probabilityA float64, K float64, A float64) {
 	// use lower Rating to get K/A
 	K, A = CalcKA(ratingA)
 	probabilityA = 1 / (math.Exp((ratingB-ratingA)/A) + 1)
