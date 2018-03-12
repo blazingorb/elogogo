@@ -10,9 +10,9 @@ const (
 	RatingMin = 100
 	RatingMax = 2700
 
-	Win  = 1
-	Lose = 0
-	Tie  = .5
+	Win  = float64(1)
+	Lose = float64(0)
+	Tie  = float64(.5)
 )
 
 var (
